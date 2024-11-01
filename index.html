@@ -12,19 +12,21 @@
     <title>Formulaire d’Évaluation des Employés</title>
 </head>
 <body class="bg-dark">
-    <div class="container">
+    <div class="container" id="main-section">
         <h1 class="text-center text-warning">Formulaire d'enquête</h1>
-        <form action="">
+        <form id="multiSectionForm" onsubmit="validateForm(event)">
             <!-- -------------------section-1----------------------- -->
             <section class="section d-block" id="section1">
-                <div class="form-group">
+                <div class="form-group m-5">
                     <label class="text-info">Nom:</label>
-                    <input class="form-control mb-3" type="text" id="nom">
+                    <input   class="form-control mb-3" type="text" id="nom" placeholder="Entrez votre nom">
+                    <small class="text-danger d-none" id="nomError">Veuillez entrer un nom valide (2 à 50 caractères).</small>
                 </div>
-                <div>
+                <div class="form-group m-5">
                     <label class="text-info" for="age">Age:</label>
-                    <input class="form-control mb-3" type="number" id="age">
-                </div>
+                    <input class="form-control mb-3" type="number" id="age" placeholder="Entrez votre âge">
+                    <small class="text-danger d-none" id="ageError">Veuillez entrer un âge entre 18 et 99.</small>
+                  </div>
                 <div class="d-flex justify-content-end">
                     <button type="button" class="btn btn-primary next-btn" >suivant</button>
                 </div>
@@ -32,25 +34,28 @@
 
             <!-- -------------------section-2----------------------- -->
             <section class="section d-none" id="section2">
-                <div class="form-group mb-3">
+                <div class="form-group m-5">
                     <label for="email" class="text-info">Email:</label>
-                    <input type="email" name="email" class="form-control mb-3">
-                </div>
-                <div class="form-group mb-3">
+                    <input type="email" id="email" name="email" placeholder="Entrez votre email" class="form-control mb-3">
+                    <small class="text-danger d-none" id="emailError">Veuillez entrer un email valide.</small>
+                  </div>
+                <div class="form-group m-5">
                     <label for="phone" class="text-info">Phone:</label>
-                    <input type="tel" name="phone" class="form-control mb-3">
-                </div>
+                    <input type="tel" id="phone" name="phone" class="form-control mb-3"  placeholder="Entrez votre nom">
+                    <small class="text-danger d-none" id="phoneError">Veuillez entrer un numéro de téléphone valide.</small>
+              </div>
                 <div class="d-flex justify-content-between">
                     <button type="button" class="btn btn-warning previous-btn"  >précédent</button>
-                    <button type="button" class="btn btn-primary next-btn"  >suivant</button>
+                    <button type="button" id="phone" class="btn btn-primary next-btn"  >suivant</button>
                 </div>
             </section>
 
             <!-- -------------------section-3----------------------- -->
             <section class="section d-none" id="section3">
-                <div class="form-group mb-3">
+                <div class="form-group m-5">
                     <label for="feedback" class="text-info">Feedback:</label>
-                    <textarea name="feedback" class="form-control"></textarea>
+                    <textarea name="feedback" id="feedback" class="form-control"></textarea>
+                    <small class="text-danger d-none" id="feedbackError">Votre commentaire doit contenir au moins 10 caractères.</small>
                 </div>
                 <div class="d-flex justify-content-between">
                     <button type="button" class="btn btn-warning previous-btn" >précédent</button>
@@ -59,6 +64,11 @@
             </section>
         </form>
     </div>
+     <div class="container">
+       <h1 id="success" class="border border-success text-success text-center p-5 d-none">Formulaire envoyé avec succès !"</h1>
+       <button id="backButton" class="d-none" onclick="showMainSection()">Retourner au formulaire</button>
+
+     </div> 
 
     <script src="assets/js/main.js"></script>
 </body>
