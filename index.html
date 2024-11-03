@@ -46,7 +46,7 @@
               </div>
                 <div class="d-flex justify-content-between">
                     <button type="button" class="btn btn-warning previous-btn"  >précédent</button>
-                    <button type="button" id="phone" class="btn btn-primary next-btn"  >suivant</button>
+                    <button type="button"  class="btn btn-primary next-btn"  >suivant</button>
                 </div>
             </section>
 
@@ -64,10 +64,11 @@
             </section>
         </form>
     </div>
-     <div class="container">
-       <h1 id="success" class="border border-success text-success text-center p-5 d-none">Formulaire envoyé avec succès !"</h1>
-       <button id="backButton" class="d-none" onclick="showMainSection()">Retourner au formulaire</button>
-
+     <div class="container ">
+       <h1 id="success" class="border border-success text-success text-center p-5 mb-5 d-none">Formulaire envoyé avec succès !"</h1>
+       <div class="position-relative mt-5">
+       <button id="backButton" class="d-none btn  btn-lg btn-primary  position-absolute top-50 start-50 translate-middle" onclick="showMainSection()">Retourner au formulaire</button>
+    </div>
      </div> 
 
     <script src="assets/js/main.js"></script>

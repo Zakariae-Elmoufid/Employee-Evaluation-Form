@@ -1,141 +1,129 @@
 const nextButtons = document.querySelectorAll('.next-btn');
-const previousButtons = document.querySelectorAll('.previous-btn')
-const sections = document.querySelectorAll(".section"); 
-let currentSectionIndex = 0; 
+const previousButtons = document.querySelectorAll('.previous-btn');
+const sections = document.querySelectorAll(".section");
+let currentSectionIndex = 0;
 
+// Function to validate the current section
+function isCurrentSectionValid() {
+    let isValid = true;
 
-nextButtons.forEach(function(button) {
-    button.onclick = function() {
-        sections[currentSectionIndex].classList.remove("d-block"); 
-        sections[currentSectionIndex].classList.add("d-none"); 
-
-        
-        currentSectionIndex++;
-        
-
-        if (currentSectionIndex >= sections.length) {
-            currentSectionIndex = 0;
+    if (currentSectionIndex === 0) {
+        // Validate Name
+        const nom = document.getElementById("nom").value;
+        const nomError = document.getElementById("nomError");
+        if (nom.length < 2 || nom.length > 50) {
+            nomError.classList.remove("d-none");
+            isValid = false;
+        } else {
+            nomError.classList.add("d-none");
         }
 
-
-        sections[currentSectionIndex].classList.remove("d-none"); 
-        sections[currentSectionIndex].classList.add("d-block"); 
-    };
-});
-
-previousButtons.forEach(function(previous){
-    
-    previous.onclick = function() {
-        sections[currentSectionIndex].classList.remove("d-blok");
-        sections[currentSectionIndex].classList.add("d-none");
-       
-        currentSectionIndex--;
-
-        sections[currentSectionIndex].classList.remove("d-none");
-        sections[currentSectionIndex].classList.add("d-block");
-
-    };
-});
-
-
-
-
-function validateForm(event){
-    event.preventDefault();
-
-    let isValid = true ;
-    // Validation du nom (2 à 50 caractères)
-    const nom = document.getElementById("nom").value;
-    const nomError = document.getElementById("nomError");
-    if(nom.length <2 || nom.length > 50) {
-        nomError.classList.remove("d-none");
-        isValid = false;
-    }else {
-        nomError.classList.add("d-none");
-    }
-
-    // Validation de l'âge (entre 18 et 99)
-    const age = document.getElementById("age").value;
-    const ageError = document.getElementById("ageError");
-    if (age < 18 || age > 99) {
-        ageError.classList.remove("d-none");
-        isValid = false;
-    } else {
-        ageError.classList.add("d-none");
-    }
-
-
-        // Validation de l'email
-        function validateEmail(email) {
-    
-            const atIndex = email.indexOf('@');
-        
-            if (atIndex > 0 && atIndex < email.length - 1) {
-                return true; 
-            } else {
-                return false; 
-            }
+        // Validate Age
+        const age = document.getElementById("age").value;
+        const ageError = document.getElementById("ageError");
+        if (age < 18 || age > 99) {
+            ageError.classList.remove("d-none");
+            isValid = false;
+        } else {
+            ageError.classList.add("d-none");
         }
-
-        
+    } else if (currentSectionIndex === 1) {
+        // Validate Email
         const email = document.getElementById("email").value;
         const emailError = document.getElementById("emailError");
-        if (!validateEmail(email) ) {
+        if (!email.includes("@") ) {
             emailError.classList.remove("d-none");
             isValid = false;
         } else {
             emailError.classList.add("d-none");
         }
+
+        // Validate Phone
+        const phone = document.getElementById("phone").value;
+        const phoneError = document.getElementById("phoneError");
+        if (phone.length < 10) {
+            phoneError.classList.remove("d-none");
+            isValid = false;
+        } else {
+            phoneError.classList.add("d-none");
+        }
+    } else if (currentSectionIndex === 2) {
+        // Validate Feedback
+        const feedback = document.getElementById("feedback").value;
+        const feedbackError = document.getElementById("feedbackError");
+        if (feedback.length < 10) {
+            feedbackError.classList.remove("d-none");
+            isValid = false;
+        } else {
+            feedbackError.classList.add("d-none");
+        }
+    }
+
+    return isValid;
+}
+
     
 
-        // Validation du numéro de téléphone (10 chiffres)*
-          
-        function validatePhone(phone) {
-            if(phone.length >= 10){
-                return true ;
-            }else{
-                return false;
+// Next button functionality
+nextButtons.forEach(function(button) {
+    button.onclick = function() {
+        if (isCurrentSectionValid()) {
+            sections[currentSectionIndex].classList.remove("d-block");
+            sections[currentSectionIndex].classList.add("d-none");
+
+            currentSectionIndex++;
+            if (currentSectionIndex < sections.length) {
+                sections[currentSectionIndex].classList.remove("d-none");
+                sections[currentSectionIndex].classList.add("d-block");
             }
         }
+    };
+});
 
-    const phone = document.getElementById("phone").value;
-    const phoneError = document.getElementById("phoneError");
-    if (!validatePhone(phone)) {
-        phoneError.classList.remove("d-none");
-        isValid = false;
-    } else {
-        phoneError.classList.add("d-none");
-    }
+// Previous button functionality
+previousButtons.forEach(function(button) {
+    button.onclick = function() {
+        sections[currentSectionIndex].classList.remove("d-block");
+        sections[currentSectionIndex].classList.add("d-none");
 
+        currentSectionIndex--;
+        if (currentSectionIndex >= 0) {
+            sections[currentSectionIndex].classList.remove("d-none");
+            sections[currentSectionIndex].classList.add("d-block");
+        } else {
+            currentSectionIndex = 0;  // Reset if we go below the first section
+        }
+    };
+});
 
-    // Validation des commentaires (au moins 10 caractères)
-    const feedback = document.getElementById("feedback").value;
-    const feedbackError = document.getElementById("feedbackError");
-    if (feedback.length < 10) {
-        feedbackError.classList.remove("d-none");
-        isValid = false;
-    } else {
-        feedbackError.classList.add("d-none");
-    }
-
-     // Si tout est valide, envoyer le formulaire
-     if (isValid) {
-        document.getElementById("main-section").classList.add("d-none");
-        document.getElementById('success').classList.remove("d-none");
-        document.getElementById("backButton").classList.remove("d-none");
-
-        document.getElementById("multiSectionForm").reset(); // Réinitialise les champs du formulaire
-        showSection(1); // Retourne à la première section
-        
-       
-    }
-
-}
 
 function showMainSection() {
     // Hide the success message and back button
     document.getElementById("success").classList.add("d-none");
     document.getElementById("backButton").classList.add("d-none");
-    document.getElementById("main-section").classList.remove("d-none"); 
+    document.getElementById("main-section").classList.remove("d-none");
 
+    // Reset the form to start from the first section
+    document.getElementById("multiSectionForm").reset();
+    currentSectionIndex = 0;
+    sections.forEach((section, index) => {
+        section.classList.add("d-none");
+        if (index === 0) section.classList.remove("d-none");
+    });
 }
+
+// Modify the form submission logic to show the success message and back button
+function validateForm(event) {
+    event.preventDefault();
+
+    let isValid = isCurrentSectionValid(); // Perform final validation
+
+    if (isValid) {
+        document.getElementById("main-section").classList.add("d-none");
+        document.getElementById('success').classList.remove("d-none");
+        document.getElementById("backButton").classList.remove("d-none");
+    }
+}
+
+// Call showMainSection() when the "Back" button is clicked
+document.getElementById("backButton").onclick = showMainSection;
